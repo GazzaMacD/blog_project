@@ -35,3 +35,13 @@ yarn-error.log*
 next-env.d.ts
 
 ###### Python, Django & Wagtail Stuff #####
+db.sqlite3
+venv_blog/
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+production.py
+
+###### Mac Stuff #####
+.DS_Store
