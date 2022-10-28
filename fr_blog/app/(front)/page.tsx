@@ -58,7 +58,7 @@ export default async function Page() {
                 height={584}
             />
             <h1>{page.banner_title}</h1>
-            <p>{page.banner_intro}</p>
+            <p style={{ whiteSpace: "pre" }}>{page.banner_intro}</p>
         </div>
     );
 }
