@@ -1,3 +1,6 @@
+###### General Project Stuff #####
+project_files/
+
 ###### Next.js Stuff #####
 # dependencies
 node_modules/
@@ -35,6 +38,7 @@ yarn-error.log*
 next-env.d.ts
 
 ###### Python, Django & Wagtail Stuff #####
+media/
 db.sqlite3
 venv_blog/
 # Byte-compiled / optimized / DLL files
