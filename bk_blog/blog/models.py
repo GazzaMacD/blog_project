@@ -2,8 +2,11 @@ from re import I
 from unittest.util import _MAX_LENGTH
 from django.db import models
 from wagtail.models import Page
-from wagtail.admin.panels import FieldPanel, MultiFieldPanel
+from wagtail.admin.panels import FieldPanel, MultiFieldPanel, StreamFieldPanel
 from wagtail.api import APIField
+from wagtail.core.fields import StreamField
+
+from streams import blocks
 
 
 class BlogIndexPage(Page):
@@ -61,6 +64,13 @@ class BlogDetailPage(Page):
         null=False,
         help_text="IMPORTANT NOTE: This date will affect the order on list pages.",
     )
+    content = StreamField(
+        [
+            ("text_block", blocks.TextBlock()),
+            ("full_width_image", blocks.FullWidthImage()),
+        ],
+        use_json_field=True,
+    )
 
     content_panels = Page.content_panels + [
         MultiFieldPanel(
@@ -71,7 +81,8 @@ class BlogDetailPage(Page):
                 FieldPanel("published_date"),
             ],
             heading="Blog Post Header Area",
-        )
+        ),
+        FieldPanel("content"),
     ]
 
     api_fields = [
@@ -79,6 +90,7 @@ class BlogDetailPage(Page):
         APIField("intro"),
         APIField("top_image"),
         APIField("published_date"),
+        APIField("content"),
     ]
 
     # Page limitations
