@@ -38,10 +38,10 @@ class BlogIndexPage(Page):
 
 class BlogDetailPage(Page):
     editable_title = models.TextField(
-        max_length=20,
+        max_length=50,
         null=False,
         blank=False,
-        help_text="This is the title to be used on the frontend\nWhite space and line breaks will show in designs.",
+        help_text="Max length 50. This is the title to be used on the frontend. White space and line breaks will show in designs.",
     )
     intro = models.TextField(
         max_length=250,
@@ -76,10 +76,9 @@ class BlogDetailPage(Page):
 
     api_fields = [
         APIField("editable_title"),
-        APIField("created"),
         APIField("intro"),
         APIField("top_image"),
-        APIField("modified"),
+        APIField("published_date"),
     ]
 
     # Page limitations
