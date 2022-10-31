@@ -9,7 +9,7 @@ class ImageChooserBlock(DefaultImageChooserBlock):
                 "id": value.id,
                 "title": value.title,
                 "original": value.get_rendition("original").attrs_dict,
-                "thumbnail": value.get_rendition("fill-120x120").attrs_dict,
+                # "thumbnail": value.get_rendition("fill-120x120").attrs_dict, # use this if need thumbnail
             }
 
 
