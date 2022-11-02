@@ -95,3 +95,4 @@ class BlogDetailPage(Page):
 
     # Page limitations
     parent_page_type = ["blog.BlogIndexPage"]
+    subpage_types = []
