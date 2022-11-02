@@ -34,6 +34,6 @@ class HomePage(Page):
         APIField("banner_image"),
     ]
     # Page limitations in admin panel
-    max_count = 1
+    max_count = 2
     parent_page_type = ["wagtailcore.Page"]
-    subpage_types = ["blog.BlogIndexPage"]
+    subpage_types = ["blog.BlogIndexPage", "staff.StaffListPage"]

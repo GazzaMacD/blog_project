@@ -1,6 +1,51 @@
 from django.db import models
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 from wagtail.models import Page
+from wagtail.api import APIField
+
+
+class StaffListPage(Page):
+    editable_title = models.TextField(
+        max_length=50,
+        null=False,
+        blank=False,
+        help_text="Max length 50. This is the title to be used on the frontend. White space and line breaks will show in designs.",
+    )
+    top_image = models.ForeignKey(
+        "wagtailimages.Image",
+        on_delete=models.SET_NULL,
+        blank=False,
+        null=True,
+        related_name="+",
+    )
+    intro = models.TextField(max_length=250, blank=False, null=False)
+
+    content_panels = Page.content_panels + [
+        MultiFieldPanel(
+            [
+                FieldPanel("editable_title"),
+                FieldPanel("top_image"),
+                FieldPanel("intro"),
+            ],
+            heading="Staff List",
+        )
+    ]
+
+    api_fields = [
+        APIField("editable_title"),
+        APIField("intro"),
+        APIField("top_image"),
+    ]
+    # Page limitations
+    max_count = 1
+    parent_page_type = ["home.HomePage"]
+    subpage_types = ["staff.StaffMember"]
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Blog List Page"
 
 
 class StaffMember(Page):
@@ -69,6 +114,17 @@ class StaffMember(Page):
             heading="Links",
         ),
     ]
+
+    api_fields = [
+        APIField("name"),
+        APIField("profile_image"),
+        APIField("bio"),
+        APIField("website"),
+        APIField("twitter"),
+        APIField("instagram"),
+        APIField("linkedin"),
+    ]
+
     parent_page_type = ["home.HomePage"]
     subpage_types = []
 

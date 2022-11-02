@@ -1,8 +1,7 @@
-from re import I
-from unittest.util import _MAX_LENGTH
 from django.db import models
-from wagtail.models import Page
-from wagtail.admin.panels import FieldPanel, MultiFieldPanel, StreamFieldPanel
+from modelcluster.fields import ParentalKey
+from wagtail.models import Page, Orderable
+from wagtail.admin.panels import FieldPanel, MultiFieldPanel, InlinePanel
 from wagtail.api import APIField
 from wagtail.core.fields import StreamField
 
@@ -37,6 +36,12 @@ class BlogIndexPage(Page):
     max_count = 1
     parent_page_type = ["home.HomePage"]
     subpage_types = ["blog.BlogDetailPage"]
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Blog List Page"
 
 
 class BlogDetailPage(Page):
@@ -83,6 +88,12 @@ class BlogDetailPage(Page):
             heading="Blog Post Header Area",
         ),
         FieldPanel("content"),
+        MultiFieldPanel(
+            [
+                InlinePanel("blog_authors", label="Author", min_num=1, max_num=3),
+            ],
+            heading="Blog Authors",
+        ),
     ]
 
     api_fields = [
@@ -91,8 +102,29 @@ class BlogDetailPage(Page):
         APIField("top_image"),
         APIField("published_date"),
         APIField("content"),
+        APIField("blog_authors"),
     ]
 
     # Page limitations
     parent_page_type = ["blog.BlogIndexPage"]
     subpage_types = []
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Blog Post"
+        verbose_name_plural = "Blog Posts"
+
+
+class BlogAuthorOrderable(Orderable):
+    page = ParentalKey(
+        BlogDetailPage, on_delete=models.CASCADE, related_name="blog_authors"
+    )
+    author = models.ForeignKey("staff.StaffMember", on_delete=models.CASCADE)
+
+    panels = [FieldPanel("author")]
+
+    api_fields = [
+        APIField("author"),
+    ]
