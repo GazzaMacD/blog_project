@@ -87,6 +87,12 @@ class BlogDetailPage(Page):
             ],
             heading="Blog Post Header Area",
         ),
+        MultiFieldPanel(
+            [
+                InlinePanel("blog_categories", label="Category", min_num=1, max_num=4),
+            ],
+            heading="Blog Categories",
+        ),
         FieldPanel("content"),
         MultiFieldPanel(
             [
@@ -96,9 +102,7 @@ class BlogDetailPage(Page):
         ),
         MultiFieldPanel(
             [
-                InlinePanel(
-                    "related_blog_posts", label="Related Post", min_num=2, max_num=4
-                ),
+                InlinePanel("related_blog_posts", label="Related Post", max_num=4),
             ],
             heading="Related Blog Posts",
         ),
@@ -109,6 +113,7 @@ class BlogDetailPage(Page):
         APIField("intro"),
         APIField("top_image"),
         APIField("published_date"),
+        APIField("blog_categories"),
         APIField("content"),
         APIField("blog_authors"),
     ]
@@ -148,4 +153,17 @@ class BlogRelatedPostsOrderable(Orderable):
 
     api_fields = [
         APIField("blog_post"),
+    ]
+
+
+class BlogCategoryOrderable(Orderable):
+    page = ParentalKey(
+        BlogDetailPage, on_delete=models.CASCADE, related_name="blog_categories"
+    )
+    category = models.ForeignKey("snippets.ContentCategory", on_delete=models.CASCADE)
+
+    panels = [FieldPanel("category")]
+
+    api_fields = [
+        APIField("category"),
     ]
