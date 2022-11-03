@@ -94,6 +94,14 @@ class BlogDetailPage(Page):
             ],
             heading="Blog Authors",
         ),
+        MultiFieldPanel(
+            [
+                InlinePanel(
+                    "related_blog_posts", label="Related Post", min_num=2, max_num=4
+                ),
+            ],
+            heading="Related Blog Posts",
+        ),
     ]
 
     api_fields = [
@@ -127,4 +135,17 @@ class BlogAuthorOrderable(Orderable):
 
     api_fields = [
         APIField("author"),
+    ]
+
+
+class BlogRelatedPostsOrderable(Orderable):
+    page = ParentalKey(
+        BlogDetailPage, on_delete=models.CASCADE, related_name="related_blog_posts"
+    )
+    blog_post = models.ForeignKey("blog.BlogDetailPage", on_delete=models.CASCADE)
+
+    panels = [FieldPanel("blog_post")]
+
+    api_fields = [
+        APIField("blog_post"),
     ]
