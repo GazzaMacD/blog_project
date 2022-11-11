@@ -1,0 +1,10 @@
+{% extends "wagtailadmin/login.html" %}
+{% load static %}
+
+{% block branding_login %}Sign in to Alive CMS{% endblock %}
+
+{% block branding_logo %}
+    <div style="background-color: white; display: flex; justify-content: center; align-items: center; padding: 8px 5px 10px 10px; border-radius: 50%; margin-top: 10px;">
+        <img src="{% static 'images/alive_logo_short.svg' %}" alt="Custom Project" width="30" height="30"/>
+    </div>
+{% endblock %}

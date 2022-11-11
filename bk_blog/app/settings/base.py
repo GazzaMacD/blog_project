@@ -15,6 +15,7 @@ import os
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
+print("Base dir -->", BASE_DIR)
 
 
 # Quick-start development settings - unsuitable for production
@@ -29,6 +30,7 @@ INSTALLED_APPS = [
     "staff",
     "search",
     "snippets",
+    "dashboard",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
     "wagtail.contrib.modeladmin",
